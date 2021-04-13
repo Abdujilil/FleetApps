@@ -10,9 +10,9 @@ import io.cucumber.java.en.When;
 import static com.fleetapp.utilities.BrowserUtils.*;
 import static org.junit.Assert.*;
 
-public class CreateVehicleStepDefs {
+public class VehiclesStepDefs {
 
-    GlobalDataUtils globalData;
+    private GlobalDataUtils globalData;
 
     @When("the user creates a vehicle with {string} information")
     public void the_user_creates_a_vehicle_with_information(String fullOrPartial) {

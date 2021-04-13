@@ -10,6 +10,7 @@ public class DBUtils {
     private static Connection connection;//connect with a database
     private static Statement statement;//execute query
     private static ResultSet resultSet;//store response/result set data
+    private static ResultSetMetaData resultSetMetaData;
 
     /**
      * Performs connection with a database.
@@ -44,6 +45,25 @@ public class DBUtils {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect with a database!");
         }
+    }
+
+    /**
+     * Run the sql query provided and return ResultSet object
+     * @param query
+     * @return ResultSet object  that contains data
+     */
+    public static ResultSet runQuery(String query){
+
+        try {
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            resultSet = statement.executeQuery(query); // setting the value of ResultSet object
+            resultSetMetaData = resultSet.getMetaData() ;  // setting the value of ResultSetMetaData for reuse
+        }catch(SQLException e){
+            System.out.println("ERROR OCCURRED WHILE RUNNING QUERY "+ e.getMessage() );
+        }
+
+        return resultSet ;
+
     }
 
     /**
@@ -222,9 +242,34 @@ public class DBUtils {
         }
     }
 
-    public static int getRowCount() throws Exception {
-        resultSet.last();
-        int rowCount = resultSet.getRow();
-        return rowCount;
+    /**
+     * This method will reset the cursor to before first location
+     */
+    private static void resetCursor(){
+
+        try {
+            resultSet.beforeFirst();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    /**
+     * find out the row count
+     * @return row count of this ResultSet
+     */
+    public static int getRowCount(){
+        int rowCount = 0 ;
+        try {
+            resultSet.last() ;
+            rowCount = resultSet.getRow() ;
+        } catch (SQLException e) {
+            System.out.println("ERROR OCCURRED WHILE GETTING ROW COUNT " + e.getMessage() );
+        }finally {
+            resetCursor();
+        }
+
+        return rowCount ;
     }
 }

@@ -3,9 +3,12 @@ package com.fleetapp.utilities;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter @Setter
 public class GlobalDataUtils {
 
+    //Vehicles
     private String licensePlate;
     private String vehicleType;
     private String driver;
@@ -25,5 +28,11 @@ public class GlobalDataUtils {
     private String horsepower;
     private String horsepowerTaxation;
     private String power;
+
+    //Vehicle Contracts
+    private String responsible;
+    private String odometerDetails;
+    private String contractStartDate;
+    private Map<String, Object> rowMap;
 
 }

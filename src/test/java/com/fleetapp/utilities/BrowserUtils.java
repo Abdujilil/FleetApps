@@ -35,9 +35,7 @@ public class BrowserUtils {
     }
 
     public static List<WebElement> getElements(String xpath){
-        WebDriverWait wait = new WebDriverWait(Driver.get(),5);
-        return wait.until(ExpectedConditions
-                .visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+        return Driver.get().findElements(By.xpath(xpath));
     }
 
     public static void clickElement(WebElement element){

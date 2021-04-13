@@ -2,6 +2,8 @@ package com.fleetapp.utilities;
 
 import com.github.javafaker.Faker;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class DataUtils {
@@ -52,5 +54,11 @@ public class DataUtils {
 
     public static String generateRandomColor() {
         return faker.color().name();
+    }
+
+    public static String changeDateFormat(String date,String dateFormat,String newFormat) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
+        LocalDate localDate = LocalDate.parse(date,dtf);
+        return localDate.format(DateTimeFormatter.ofPattern(newFormat));
     }
 }
